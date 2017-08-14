@@ -42,6 +42,8 @@ classdef Plot < handle
 %   LineCount:    Number of plots (readonly)
 %   Markers:      cell array {'marker1', 'marker2', ..}: element i changes 
 %                 the property of i-th dataset; default: 'None'
+%   MarkerSize:   cell array [size1, size2, ..]: element i changes the
+%                 property of the i-th dataset; default: 3*lineWidth;
 %   MarkerSpacing:vector [space1, space2, ..]: element i changes the 
 %                 property of i-th dataset; default: 0
 %   Colors:       3xN matrix, [red, green, blue] where N is the number of 
@@ -128,7 +130,8 @@ classdef Plot < handle
             plot.LegendBoxColor  = [1,1,1];
             plot.LegendTextColor = [0,0,0];
             plot.MarkerSpacing   = 5;
-            plot.Markers         = '';            
+            plot.Markers         = '';
+            plot.MarkerSize      = 3*plot.LineWidth;
 
             plot.Resolution      = 600;
         end
@@ -145,6 +148,7 @@ classdef Plot < handle
         LineCount
         Markers
         MarkerSpacing
+        MarkerSize
         Colors
         AxisColor
         AxisLineWidth
@@ -222,6 +226,7 @@ classdef Plot < handle
         lineStyle   % line style
         markers     % markers
         markerSpacing % marker spacing
+        markerSize % marker size
         colors      % line colors
         legendBox          % legend box, on/off
         legendBoxColor     % legend box color
@@ -464,7 +469,7 @@ classdef Plot < handle
                           'Color'           , self.colors{ii}, ...
                           'MarkerEdgeColor' , 'none',...
                           'MarkerFaceColor' , self.colors{ii}, ...
-                          'MarkerSize'      , 3*self.lineWidth(ii)); 
+                          'MarkerSize'      , self.markerSize(ii)); 
                     
                         if isempty(self.hfm{ii})
                             X = self.xdata{ii};
@@ -479,7 +484,7 @@ classdef Plot < handle
                           'Color'           , self.colors{ii}, ...
                           'MarkerEdgeColor' , 'none',...
                           'MarkerFaceColor' , self.colors{ii}, ...
-                          'MarkerSize'      , 3*self.lineWidth(ii), ...
+                          'MarkerSize'      , self.markerSize(ii), ...
                           'LineWidth'       , self.lineWidth(ii),...
                           'Visible'         , 'off');
                     end                       
